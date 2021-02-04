@@ -1,9 +1,9 @@
-import discord
+﻿import discord
 import asyncio
+#import os
+#from dotenv import load_dotenv
 from discord.ext.commands import Bot
 from discord.ext.commands import has_permissions, MissingPermissions
-#from dotenv import load_dotenv
-#import os
 
 #load_dotenv(.env)
 
@@ -16,7 +16,6 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
     print(f'{bot.user} is ready.')
-#    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name= str(len(bot.guilds)) + " servers | >help"))
     bot.loop.create_task(status_task())
 
 @bot.event
@@ -47,7 +46,10 @@ async def help(ctx):
     embedVar.add_field(name=">clear <amount>", value="Clear messages from a channel", inline=False)
     embedVar.add_field(name=">kick <@member> <Reason>", value="Kick a member from the discord server", inline=False)
     embedVar.add_field(name=">ban <@member> <Reason>", value="Ban a member from the discord server", inline=False)
-    await ctx.send(embed=embedVar)
+    emoji = '\N{CLOSED MAILBOX WITH RAISED FLAG}'
+    await ctx.message.add_reaction(emoji)
+    await ctx.author.send(embed=embedVar)
+
 
 @bot.command()
 async def clear(ctx, amount=6):
