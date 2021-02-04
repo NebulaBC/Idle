@@ -1,5 +1,6 @@
 import discord
 from discord.ext.commands import Bot
+from discord.ext.commands import has_permissions, MissingPermissions
 #from dotenv import load_dotenv
 #import os
 
@@ -43,14 +44,28 @@ async def clear(ctx, amount=6):
     await ctx.channel.purge(limit=amount + 1)
 
 @bot.command()
+@has_permissions(manage_roles=True, kick_members=True)
 async def kick(ctx, user: discord.Member):
     await ctx.send(f'{user.name} Has Been Kicked!')
     await ctx.guild.kick(user)
 
+@kick.error
+async def kick_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+        await ctx.send(text)
+
 @bot.command()
+@has_permissions(manage_roles=True, kick_members=True)
 async def ban(ctx, user: discord.Member):
     await ctx.send(f'{user.name} Has Been Banished!')
     await ctx.guild.ban(user)
+
+@ban.error
+async def ban_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
+        await ctx.send(text)
 
 bot.run('')
 #client.run(os.getenv('IDLE_BOT_TOKEN'))
