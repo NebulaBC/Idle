@@ -1,4 +1,5 @@
 import discord
+import asyncio
 from discord.ext.commands import Bot
 from discord.ext.commands import has_permissions, MissingPermissions
 #from dotenv import load_dotenv
@@ -15,7 +16,16 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
     print(f'{bot.user} is ready.')
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name= str(len(bot.guilds)) + " servers | >help"))
+#    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name= str(len(bot.guilds)) + " servers | >help"))
+    bot.loop.create_task(status_task())
+
+@bot.event
+async def status_task():
+    while True:
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name= str(len(bot.guilds)) + " servers"))
+        await asyncio.sleep(10)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name= ">help for commands"))
+        await asyncio.sleep(10)
 
 @bot.event
 async def on_member_join(member):
