@@ -1,8 +1,5 @@
 import discord
 import os
-from dotenv import load_dotenv, find_dotenv
-
-load_dotenv('.env')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -27,4 +24,4 @@ async def on_member_remove(member):
 async def ping(ctx):
     await ctx.send('Pong')
 
-client.run(os.getenv('IDLE_BOT_TOKEN'))
+client.run('ODA2NjQ5ODMyMjEwNTYzMTUz.YBshMg.mnEW4MXYqBHmuJTQhsudqEEFPEs')
