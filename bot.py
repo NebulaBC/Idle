@@ -17,20 +17,9 @@ bot.remove_command('help')
 async def on_ready():
     print(f'{bot.user} is ready.')
     bot.loop.create_task(status_task())
-
-@bot.command()
-async def load(ctx, extension):
-    if ctx.message.author.id in bot_admins:
-        bot.load_extension(f'cogs.{extension}')
-
-@bot.command()
-async def unload(ctx, extension):
-    if ctx.message.author.id in bot_admins:
-        bot.unload_extension(f'cogs.{extension}')
-
-for filename in os.listdir('./cogs'):
+for filename in os.listdir('./commands'):
     if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')
+        bot.load_extension(f'commands.{filename[:-3]}')
 
 @bot.event
 async def status_task():
@@ -48,26 +37,6 @@ async def on_member_join(member):
 @bot.event
 async def on_member_remove(member):
     print (f'{member} has left a server')
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send(f'Ping: {round(bot.latency * 1000)}ms')
-
-@bot.command()
-async def help(ctx):
-    embedVar = discord.Embed(title="Help", description="", color=0x3410d4)
-    embedVar.add_field(name=">ping", value="Get the ping of IDLE bot", inline=False)
-    embedVar.add_field(name=">clear <amount>", value="Clear messages from a channel", inline=False)
-    embedVar.add_field(name=">kick <@member> <Reason>", value="Kick a member from the discord server", inline=False)
-    embedVar.add_field(name=">ban <@member> <Reason>", value="Ban a member from the discord server", inline=False)
-    emoji = '\N{CLOSED MAILBOX WITH RAISED FLAG}'
-    await ctx.message.add_reaction(emoji)
-    await ctx.author.send(embed=embedVar)
-
-
-@bot.command()
-async def clear(ctx, amount=6):
-    await ctx.channel.purge(limit=amount + 1)
 
 @bot.command()
 @has_permissions(manage_roles=True, kick_members=True)
