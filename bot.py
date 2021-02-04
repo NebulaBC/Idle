@@ -35,5 +35,5 @@ async def help(ctx):
     embedVar.add_field(name=">ping", value="Get the ping of IDLE bot", inline=False)
     await ctx.send(embed=embedVar)
 
-bot.run('ODA2NjQ5ODMyMjEwNTYzMTUz.YBshMg.WlAO82pa7oXWfCjfdvm6xbq4fZc')
+bot.run('Token here or use .env')
 #client.run(os.getenv('IDLE_BOT_TOKEN'))
