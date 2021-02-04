@@ -33,6 +33,7 @@ async def ping(ctx):
 async def help(ctx):
     embedVar = discord.Embed(title="Help", description="", color=0x3410d4)
     embedVar.add_field(name=">ping", value="Get the ping of IDLE bot", inline=False)
+    embedVar.add_field(name=">clear <amount>", value="Clear messages from a channel", inline=False)
     embedVar.add_field(name=">kick <@member> <Reason>", value="Kick a member from the discord server", inline=False)
     embedVar.add_field(name=">ban <@member> <Reason>", value="Ban a member from the discord server", inline=False)
     await ctx.send(embed=embedVar)
